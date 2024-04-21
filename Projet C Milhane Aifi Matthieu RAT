@@ -1,0 +1,59 @@
+main.c :#include "cdataframe.h"
+#include <stdio.h>
+
+int main(){
+    // Création du dataframe et ajout de colonnes
+    CDATAFRAME *df = create_cdataframe();
+    COLUMN *ageColumn = create_column("Age");
+    COLUMN *heightColumn = create_column("Height");
+
+    add_column(df, ageColumn);
+    add_column(df, heightColumn);
+
+    // Ajout de données
+    int ages[] = {25, 30, 35};
+    int heights[] = {175, 180, 185};
+    add_row(df, ages);
+    add_row(df, heights);
+
+    // Affichage du dataframe complet
+    printf("Complete Dataframe:\n");
+    print_cdataframe(df);
+
+    COLUMN *mycol = create_column("My column");
+    insert_value(mycol, 52);
+    insert_value(mycol, 44);
+    insert_value(mycol, 15);
+    print_col(mycol);
+
+    // Test de l'affichage partiel
+    printf("Partial Dataframe:\n");
+    print_partial_cdataframe(df, 0, 1, 0, 1);
+
+    // Suppression d'une ligne et affichage
+    delete_row(df, 1);
+    printf("After deleting row 1:\n");
+    print_cdataframe(df);
+
+    // Renommage d'une colonne
+    rename_column(df, 0, "New Age");
+    print_column_names(df);
+
+    // Vérification de l'existence d'une valeur
+    printf("Exists value 30: %s\n", value_exists(df, 30) ? "Yes" : "No");
+
+    // Comptage des lignes et colonnes
+    printf("Number of rows: %d\n", count_rows(df));
+    printf("Number of columns: %d\n", count_cols(df));
+
+    // Mise à jour d'une cellule
+    update_cell(df, 0, 0, 45);
+    printf("After updating cell [0][0] to 45:\n");
+    print_cdataframe(df);
+
+    // Nettoyage
+    delete_cdataframe(&df);
+
+
+    return 0;
+}
